@@ -29,7 +29,6 @@ app.use(cors({
     credentials: true,
     origin: ['https://assessment-fe-1.herokuapp.com', 'http://localhost:3001']
 }));
-app.set('trust proxy', 1)
 
 app.listen(port, () => {
     if (process.env.NODE_ENV !== 'production') {
