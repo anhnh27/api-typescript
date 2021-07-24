@@ -20,6 +20,10 @@ app.use(express.json());
 app.use(helmet());
 app.use(cors({ credentials: true, origin: ['https://assessment-fe-1.herokuapp.com', 'http://localhost:3001'] }));
 app.use("/", routes);
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+});
 
 app.listen(port, () => {
     if (process.env.NODE_ENV !== 'production') {

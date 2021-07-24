@@ -29,7 +29,6 @@ const editTask = async (req: Request, res: Response) => {
 }
 
 const deleteTask = async (req: Request, res: Response) => {
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
     const { ok, status, message, data } = await TasksService.deleteTask(req.params.id);
     if (ok && data) {
         return res.status(status).json(data);
