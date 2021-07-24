@@ -25,12 +25,15 @@ app.use(session({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+    credentials: true,
+    origin: ['https://assessment-fe-1.herokuapp.com', 'http://localhost:3001']
+}));
 app.use("/", routes);
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Origin', ['https://assessment-fe-1.herokuapp.com', 'http://localhost:3001']);
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, content-type');
     next();
 });
 app.set('trust proxy', 1)
