@@ -18,7 +18,7 @@ app.use(session({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(helmet());
-app.use(cors({ credentials: true, origin: ['https://assessment-fe-1.herokuapp.com', 'http://localhost:3000'] }));
+app.use(cors({ credentials: true, origin: ['https://assessment-fe-1.herokuapp.com', 'http://localhost:3001'] }));
 app.use("/", routes);
 
 app.listen(port, () => {

@@ -10,6 +10,7 @@ declare module 'express-session' {
 }
 
 const login = async (req: Request, res: Response) => {
+    res.setHeader('Access-Control-Allow-Credentials', 'true')
     const { email, password } = req.body;
     if (!email || !password) {
         return res.sendStatus(400);
@@ -17,11 +18,11 @@ const login = async (req: Request, res: Response) => {
     const { ok, status, message, data } = await AuthService.login(email, password);
     if (ok && data) {
         const { firstName, lastName, profilePic } = data;
-        const token = uuid();
+        let tokenId = uuid();
         const responseObj = {
             token: {
                 name: `${firstName} ${lastName}`,
-                token: uuid()
+                token: tokenId
             },
             image: profilePic,
         }

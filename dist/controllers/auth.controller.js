@@ -59,10 +59,11 @@ exports.logout = exports.login = void 0;
 var uuid_1 = require("uuid");
 var AuthService = __importStar(require("../services/auth"));
 var login = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, email, password, _b, ok, status, message, data, firstName, lastName, profilePic, token, responseObj;
+    var _a, email, password, _b, ok, status, message, data, firstName, lastName, profilePic, tokenId, responseObj;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
+                res.setHeader('Access-Control-Allow-Credentials', 'true');
                 _a = req.body, email = _a.email, password = _a.password;
                 if (!email || !password) {
                     return [2 /*return*/, res.sendStatus(400)];
@@ -72,11 +73,11 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
                 _b = _c.sent(), ok = _b.ok, status = _b.status, message = _b.message, data = _b.data;
                 if (ok && data) {
                     firstName = data.firstName, lastName = data.lastName, profilePic = data.profilePic;
-                    token = uuid_1.v4();
+                    tokenId = uuid_1.v4();
                     responseObj = {
                         token: {
                             name: firstName + " " + lastName,
-                            token: uuid_1.v4()
+                            token: tokenId
                         },
                         image: profilePic,
                     };

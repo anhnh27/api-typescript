@@ -22,7 +22,7 @@ app.use(express_session_1.default({
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use(helmet_1.default());
-app.use(cors_1.default({ credentials: true, origin: ['https://assessment-fe-1.herokuapp.com', 'http://localhost:3000'] }));
+app.use(cors_1.default({ credentials: true, origin: ['https://assessment-fe-1.herokuapp.com', 'http://localhost:3001'] }));
 app.use("/", routes_1.default);
 app.listen(port, function () {
     if (process.env.NODE_ENV !== 'production') {
