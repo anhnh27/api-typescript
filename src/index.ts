@@ -14,10 +14,10 @@ app.use(session({
     secret: 'dev',
     resave: false,
     saveUninitialized: true,
-    cookie: {
-        secure: true,
-        sameSite: 'none'
-    }
+    // cookie: {
+    //     secure: true,
+    //     sameSite: 'none'
+    // }
 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

@@ -18,10 +18,10 @@ app.use(express_session_1.default({
     secret: 'dev',
     resave: false,
     saveUninitialized: true,
-    cookie: {
-        secure: true,
-        sameSite: false
-    }
+    // cookie: {
+    //     secure: true,
+    //     sameSite: 'none'
+    // }
 }));
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
