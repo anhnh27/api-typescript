@@ -25,7 +25,6 @@ const login = async (req: Request, res: Response) => {
             },
             image: profilePic,
         }
-        req.session.authenticated = true;
         return res.status(status).json(responseObj);
     } else {
         return res.status(status).json({ message });
