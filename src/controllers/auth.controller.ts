@@ -25,7 +25,6 @@ const login = async (req: Request, res: Response) => {
             },
             image: profilePic,
         }
-        res.cookie('sid.connection', 1000, { maxAge: 900000, httpOnly: true });
         req.session.authenticated = true;
         return res.status(status).json(responseObj);
     } else {

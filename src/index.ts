@@ -14,10 +14,9 @@ app.use(session({
     secret: 'dev',
     resave: false,
     saveUninitialized: true,
-    // cookie: {
-    //     secure: true,
-    //     sameSite: 'none'
-    // }
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24
+    }
 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
