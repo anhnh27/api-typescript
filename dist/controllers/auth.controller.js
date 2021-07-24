@@ -54,12 +54,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.logout = exports.login = void 0;
-var uuid_1 = require("uuid");
 var AuthService = __importStar(require("../services/auth"));
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var twt_1 = __importDefault(require("../config/twt"));
 var login = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, email, password, _b, ok, status, message, data, firstName, lastName, profilePic, tokenId, responseObj;
+    var _a, email, password, _b, ok, status, message, data, firstName_1, lastName_1, profilePic_1;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
@@ -71,17 +75,18 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
             case 1:
                 _b = _c.sent(), ok = _b.ok, status = _b.status, message = _b.message, data = _b.data;
                 if (ok && data) {
-                    firstName = data.firstName, lastName = data.lastName, profilePic = data.profilePic;
-                    tokenId = uuid_1.v4();
-                    responseObj = {
-                        token: {
-                            name: firstName + " " + lastName,
-                            token: tokenId
-                        },
-                        image: profilePic,
-                    };
-                    req.session.authenticated = true;
-                    return [2 /*return*/, res.status(status).json(responseObj)];
+                    firstName_1 = data.firstName, lastName_1 = data.lastName, profilePic_1 = data.profilePic;
+                    jsonwebtoken_1.default.sign({
+                        username: firstName_1 + " " + lastName_1 + " " + new Date(),
+                    }, twt_1.default, { expiresIn: '1h' }, function (err, token) {
+                        return res.status(status).send({
+                            token: {
+                                name: firstName_1 + " " + lastName_1,
+                                token: token,
+                            },
+                            image: profilePic_1,
+                        });
+                    });
                 }
                 else {
                     return [2 /*return*/, res.status(status).json({ message: message })];
@@ -92,22 +97,24 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
 }); };
 exports.login = login;
 var logout = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, ok, status, message;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0: return [4 /*yield*/, AuthService.logout()];
-            case 1:
-                _a = _b.sent(), ok = _a.ok, status = _a.status, message = _a.message;
-                if (ok) {
-                    req.session.destroy(function () { });
-                    res.clearCookie('connect.sid');
-                    return [2 /*return*/, res.status(status).json({ message: message })];
-                }
-                else {
-                    return [2 /*return*/, res.status(status).json({ message: message })];
-                }
-                return [2 /*return*/];
-        }
+    var authorization, bearer, bearerToken;
+    return __generator(this, function (_a) {
+        authorization = req.headers.authorization;
+        if (!authorization)
+            return [2 /*return*/, res.sendStatus(403)];
+        bearer = authorization === null || authorization === void 0 ? void 0 : authorization.split(" ");
+        bearerToken = bearer[1];
+        jsonwebtoken_1.default.verify(bearerToken, twt_1.default, function (err, result) {
+            if (err) {
+                res.sendStatus(403);
+            }
+            else {
+                req.session.destroy(function () { });
+                res.clearCookie('connect.sid');
+                return res.status(200).json({ message: 'Logout successfully.' });
+            }
+        });
+        return [2 /*return*/];
     });
 }); };
 exports.logout = logout;
