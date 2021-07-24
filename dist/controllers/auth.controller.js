@@ -63,7 +63,6 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
-                res.setHeader('Access-Control-Allow-Credentials', 'true');
                 _a = req.body, email = _a.email, password = _a.password;
                 if (!email || !password) {
                     return [2 /*return*/, res.sendStatus(400)];

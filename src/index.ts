@@ -13,7 +13,11 @@ app.use(session({
     },
     secret: 'dev',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        secure: true,
+        sameSite: false
+    }
 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -21,7 +25,9 @@ app.use(helmet());
 app.use(cors({ credentials: true, origin: ['https://assessment-fe-1.herokuapp.com', 'http://localhost:3001'] }));
 app.use("/", routes);
 app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Origin', ['https://assessment-fe-1.herokuapp.com', 'http://localhost:3001']);
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     next();
 });
 

@@ -17,13 +17,23 @@ app.use(express_session_1.default({
     },
     secret: 'dev',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        secure: true,
+        sameSite: false
+    }
 }));
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use(helmet_1.default());
 app.use(cors_1.default({ credentials: true, origin: ['https://assessment-fe-1.herokuapp.com', 'http://localhost:3001'] }));
 app.use("/", routes_1.default);
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Origin', ['https://assessment-fe-1.herokuapp.com', 'http://localhost:3001']);
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    next();
+});
 app.listen(port, function () {
     if (process.env.NODE_ENV !== 'production') {
         console.log("API is running on http://localhost:" + port);
