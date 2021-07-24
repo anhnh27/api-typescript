@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 
 export const authorization = (req: Request, res: Response, next: any) => {
-    console.log('req.session', req.session)
-    console.log('req.signedCookies', req.signedCookies)
+    console.log('req.session.cookie', req.session.cookie)
     if (req.session && req.session.authenticated)
         return next();
     else
