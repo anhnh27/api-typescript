@@ -43,9 +43,9 @@ var users = [
         id: uuid_1.v4(),
         firstName: "Alex",
         lastName: "Nguyen",
-        email: "nguyenhoanganh10290@gmail.com",
+        email: "admin",
         profilePic: 'https://qikify-cdn.nyc3.cdn.digitaloceanspaces.com/production/mobilemenu/instances/24013/385abfddbcf83e0f3b615c5c1bf6babfaa6eab55425ce9852b5b7e74b0d0b0d8.jpeg',
-        password: '111111'
+        password: 'admin'
     }
 ];
 var login = function (email, password) { return __awaiter(void 0, void 0, void 0, function () {

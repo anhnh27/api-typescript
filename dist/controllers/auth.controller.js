@@ -99,8 +99,8 @@ var logout = function (req, res) { return __awaiter(void 0, void 0, void 0, func
             case 1:
                 _a = _b.sent(), ok = _a.ok, status = _a.status, message = _a.message;
                 if (ok) {
-                    req.session.destroy(function () {
-                    });
+                    req.session.destroy(function () { });
+                    res.clearCookie('connect.sid');
                     return [2 /*return*/, res.status(status).json({ message: message })];
                 }
                 else {
