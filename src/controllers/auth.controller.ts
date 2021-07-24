@@ -10,7 +10,7 @@ declare module 'express-session' {
 }
 
 const login = async (req: Request, res: Response) => {
-    res.setHeader('Access-Control-Allow-Credentials', 'true')
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
     const { email, password } = req.body;
     if (!email || !password) {
         return res.sendStatus(400);
