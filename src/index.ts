@@ -16,7 +16,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: {
         secure: true,
-        sameSite: false
+        sameSite: 'none'
     }
 }));
 app.use(express.urlencoded({ extended: true }));
