@@ -30,6 +30,7 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     next();
 });
+app.set('trust proxy', 1)
 
 app.listen(port, () => {
     if (process.env.NODE_ENV !== 'production') {
