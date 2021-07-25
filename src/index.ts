@@ -25,12 +25,8 @@ app.use(session({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(helmet());
-if (process.env.NODE_ENV === 'propduction') {
-    app.use(cors({ credentials: true, origin: 'https://assessment-fe-1.herokuapp.com' }));
-} else {
-    app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
-}
-
+app.use(cors({ credentials: true, origin: 'https://assessment-fe-1.herokuapp.com' }));
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use("/", routes);
 app.listen(port, () => {
     if (process.env.NODE_ENV !== 'production') {
