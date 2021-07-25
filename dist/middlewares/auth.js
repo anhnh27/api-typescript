@@ -8,16 +8,16 @@ var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var twt_1 = __importDefault(require("../config/twt"));
 var authorization = function (req, res, next) {
     var authorization = req.headers.authorization;
-    if (!authorization)
-        return res.sendStatus(403);
-    var bearer = authorization === null || authorization === void 0 ? void 0 : authorization.split(" ");
-    var bearerToken = bearer[1];
+    if (!authorization) {
+        return res.sendStatus(401);
+    }
+    var bearerToken = authorization === null || authorization === void 0 ? void 0 : authorization.split(" ")[1];
     jsonwebtoken_1.default.verify(bearerToken, twt_1.default, function (err, result) {
         if (err) {
-            res.sendStatus(403);
+            return res.sendStatus(403);
         }
         else {
-            next();
+            return next();
         }
     });
 };

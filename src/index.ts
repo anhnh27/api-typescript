@@ -7,7 +7,7 @@ import fileStore = require('session-file-store');
 import routes from './routes';
 
 var FileStore = fileStore(session);
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 const app = express();
 app.use(session({
     genid: (req) => {
@@ -25,7 +25,12 @@ app.use(session({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(helmet());
-app.use(cors({ credentials: true, origin: 'https://assessment-fe-1.herokuapp.com' }));
+if (process.env.NODE_ENV === 'propduction') {
+    app.use(cors({ credentials: true, origin: 'https://assessment-fe-1.herokuapp.com' }));
+} else {
+    app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+}
+
 app.use("/", routes);
 app.listen(port, () => {
     if (process.env.NODE_ENV !== 'production') {
