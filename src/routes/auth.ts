@@ -1,9 +1,9 @@
-import express, { Router } from "express";
-import * as AuthController from "../controllers/auth.controller";
+import { Router } from "express";
+import AuthController from "../controllers/auth.controller";
+import { checkJwt } from "../middlewares/checkJwt";
 
-const authRoute: Router = express.Router();
+const router = Router();
+router.post("/login", AuthController.login);
+router.post("/change-password", [checkJwt], AuthController.changePassword);
 
-authRoute.post("/login", AuthController.login);
-authRoute.get("/logout", AuthController.logout);
-
-export default authRoute;
+export default router;

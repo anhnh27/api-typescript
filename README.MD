@@ -3,6 +3,6 @@
 yarn install
 ```
 ```bash
-yarn dev
+yarn start
 ```
 

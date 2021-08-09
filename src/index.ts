@@ -1,33 +1,25 @@
-import express from "express";
+import "reflect-metadata";
+import express, { Application } from "express";
 import helmet from "helmet";
 import cors from "cors";
-import session from "express-session";
-import { v4 as uuid } from 'uuid';
-import fileStore = require('session-file-store');
+import { createConnection } from "typeorm";
 import routes from './routes';
 
-var FileStore = fileStore(session);
-const port = process.env.PORT || 8000;
-const app = express();
-app.use(session({
-    genid: (req) => {
-        return uuid()
-    },
-    secret: '3Aa7d3e557-e628-45aa-be24-f692b10d9b41',
-    cookie: {
-        secure: true,
-        maxAge: 1000 * 60 * 60 * 24
-    },
-    resave: false,
-    saveUninitialized: true,
-    store: new FileStore()
-}));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(helmet());
-app.use(cors({ credentials: true, origin: 'https://assessment-fe-1.herokuapp.com' }));
-// app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
-app.use("/", routes);
-app.listen(port, () => {
-    console.log(`API is running on http://localhost:${port}`);
-});
+createConnection().then(async _connection => {
+    const PORT = process.env.PORT || 8000;
+    const app: Application = express();
+
+    // midlewares
+    app.use(express.urlencoded({ extended: true }));
+    app.use(express.json());
+    app.use(helmet());
+    app.use(cors())
+    // app.use(cors({ credentials: true, origin: 'https://assessment-fe-1.herokuapp.com' }));
+    // app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+
+    // define routes
+    app.use("/", routes);
+    app.listen(PORT, () => {
+        console.log(`API is running on http://localhost:${PORT}`);
+    });
+}).catch(error => console.log(error));

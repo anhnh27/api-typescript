@@ -1,13 +1,9 @@
-import express from "express";
-import { authorization } from "../middlewares/auth";
+import { Router } from "express";
 import authRoute from "./auth";
-import tasksRoute from "./tasks";
-import dashboardRoute from "./dashboard";
+import userRoute from "./user";
 
-const routes = express.Router();
-
+const routes: Router = Router();
 routes.use("/", authRoute);
-routes.use("/", authorization, tasksRoute);
-routes.use("/", authorization, dashboardRoute);
+routes.use("/", userRoute);
 
 export default routes;
