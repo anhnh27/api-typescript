@@ -1,1 +1,1 @@
-export const JWT_SECRET = '@QEGTUI';
+export const JWT_SECRET = '@AAA';
